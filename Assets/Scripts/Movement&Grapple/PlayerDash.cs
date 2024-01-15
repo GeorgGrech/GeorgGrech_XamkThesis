@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerDash : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private float dashForce;
     [SerializeField] Rigidbody playerRB;
     [SerializeField] Transform playerRotation;
+
+    [SerializeField] Slider dashSlider;
     
     enum ButtonPressed
     {
@@ -27,7 +30,7 @@ public class PlayerDash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        dashTimer = dashCooldown; //Make dash instantly available
     }
 
     // Update is called once per frame
@@ -35,6 +38,7 @@ public class PlayerDash : MonoBehaviour
     {
         dashTimer += Time.deltaTime;
         doubleTapTimer += Time.deltaTime;
+        UpdateDashSlider();
 
         UserInput();
     }
@@ -44,7 +48,27 @@ public class PlayerDash : MonoBehaviour
         dashTimer = 0; //Reset timer
         Debug.Log("Dashing");
 
-        playerRB.AddForce(new Vector3(0,0, dashForce));
+        playerRB.velocity = Vector3.zero; //Stop player movement before assigning new force
+
+        Vector3 forceDirection = Vector3.zero;
+
+        switch (direction)
+        {
+            case ButtonPressed.Forward:
+                forceDirection = Vector3.forward;
+                break;
+            case ButtonPressed.Back:
+                forceDirection = Vector3.back;
+                break;
+            case ButtonPressed.Left:
+                forceDirection = Vector3.left;
+                break;
+            case ButtonPressed.Right:
+                forceDirection = Vector3.right;
+                break;
+        }
+
+        playerRB.AddForce(playerRotation.rotation * forceDirection * dashForce);
         
     }
 
@@ -91,6 +115,19 @@ public class PlayerDash : MonoBehaviour
             //If a key has been pressed
             lastPressed = nowPressed; //Save direction pressed
             doubleTapTimer = 0; //Reset timer
+        }
+    }
+
+    void UpdateDashSlider()
+    {
+        if (dashTimer >= dashCooldown)
+        {
+            dashSlider.gameObject.SetActive(false);
+        }
+        else
+        {
+            dashSlider.value = (1-(dashTimer/dashCooldown));
+            dashSlider.gameObject.SetActive(true);
         }
     }
 }
