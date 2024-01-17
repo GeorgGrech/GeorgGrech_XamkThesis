@@ -9,43 +9,57 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] PlayerGrapple playerGrapple; //Link to player's grapple ability. Used to check that player is not grappling when dash is attempted.
 
     [SerializeField] private float dashCooldown; //Minimum value between dashes
-    private float dashTimer; //Constantly updated time to check if dash is available
+    private float dashCooldownTimer; //Constantly updated time to check if dash is available
 
     [SerializeField] private float doubleTapInterval;
     private float doubleTapTimer;
 
     [SerializeField] private float dashForce;
+    [SerializeField] private float dashTime;
+
     [SerializeField] Rigidbody playerRB;
     [SerializeField] Transform playerRotation;
 
     [SerializeField] Slider dashSlider;
-    
+
+    private bool dashing = false;
+    private Vector3 dashDirection; 
+
     enum ButtonPressed
     {
         Forward, Back, Left, Right, Null //Including "Null" value if nothing has been pressed in a particular frame
     }
 
+    [Space(10)]
     [SerializeField] ButtonPressed lastPressed;
 
     // Start is called before the first frame update
     void Start()
     {
-        dashTimer = dashCooldown; //Make dash instantly available
+        dashCooldownTimer = dashCooldown; //Make dash instantly available
     }
 
     // Update is called once per frame
     void Update()
     {
-        dashTimer += Time.deltaTime;
+        dashCooldownTimer += Time.deltaTime;
         doubleTapTimer += Time.deltaTime;
         UpdateDashSlider();
 
         UserInput();
     }
 
-    private void Dash(ButtonPressed direction)
+    private void FixedUpdate()
     {
-        dashTimer = 0; //Reset timer
+        if(dashing)
+        {
+            playerRB.position += dashForce * Time.fixedDeltaTime * dashDirection;
+        }
+    }
+
+    private IEnumerator DashLifetime(ButtonPressed direction)
+    {
+        dashCooldownTimer = 0; //Reset timer
         Debug.Log("Dashing");
 
         playerRB.velocity = Vector3.zero; //Stop player movement before assigning new force
@@ -68,8 +82,14 @@ public class PlayerDash : MonoBehaviour
                 break;
         }
 
-        playerRB.AddForce(playerRotation.rotation * forceDirection * dashForce);
-        
+        dashing = true;
+        dashDirection = playerRotation.localRotation * forceDirection;
+        playerRB.useGravity = false; //Disable gravity to keep constant direction
+
+
+        yield return new WaitForSeconds(dashTime);
+        dashing = false;
+        playerRB.useGravity = true;
     }
 
     void UserInput()
@@ -101,12 +121,12 @@ public class PlayerDash : MonoBehaviour
         {
             if (doubleTapTimer <= doubleTapInterval) //If within dashing time window
             {
-                if (dashTimer >= dashCooldown) //If dash has cooled down
+                if (dashCooldownTimer >= dashCooldown) //If dash has cooled down
                 {
-                    Dash(nowPressed);
+                    StartCoroutine(DashLifetime(nowPressed));
                 }
                 else
-                    Debug.Log("Cooling down - " + (dashCooldown - dashTimer) + "s left");
+                    Debug.Log("Cooling down - " + (dashCooldown - dashCooldownTimer) + "s left");
             }
         }
 
@@ -120,13 +140,13 @@ public class PlayerDash : MonoBehaviour
 
     void UpdateDashSlider()
     {
-        if (dashTimer >= dashCooldown)
+        if (dashCooldownTimer >= dashCooldown)
         {
             dashSlider.gameObject.SetActive(false);
         }
         else
         {
-            dashSlider.value = (1-(dashTimer/dashCooldown));
+            dashSlider.value = (1-(dashCooldownTimer /dashCooldown));
             dashSlider.gameObject.SetActive(true);
         }
     }
