@@ -1237,7 +1237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerGrapple: {fileID: 2635684106963020395}
   dashCooldown: 3
-  doubleTapInterval: 0.3
+  doubleTapInterval: 0.2
   dashForce: 50
   dashTime: 0.1
   playerRB: {fileID: 7714403387093543533}

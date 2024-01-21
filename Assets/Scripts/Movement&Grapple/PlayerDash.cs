@@ -53,7 +53,7 @@ public class PlayerDash : MonoBehaviour
     {
         if(dashing)
         {
-            playerRB.position += dashForce * Time.fixedDeltaTime * dashDirection;
+            playerRB.position += dashForce * Time.fixedDeltaTime * dashDirection; //Adjusting position directly has the issue of phasing through objects. Patched with Collision Event
         }
     }
 
@@ -148,6 +148,15 @@ public class PlayerDash : MonoBehaviour
         {
             dashSlider.value = (1-(dashCooldownTimer /dashCooldown));
             dashSlider.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision) //Stay instead of enter in case player is already touching collider
+    {
+        if (dashing)
+        {
+            //Possibly check layer here?
+            dashing = false;
         }
     }
 }
