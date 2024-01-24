@@ -30,7 +30,7 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private int townTimer;
 
-    private BoidManagerUpdated boidManager;
+    private BoidManager boidManager;
 
     [Space(10)]
 
@@ -47,7 +47,7 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        boidManager = FindObjectOfType<BoidManagerUpdated>();
+        boidManager = FindObjectOfType<BoidManager>();
         //boidManager.waveManager = this;
         StartCoroutine(WaveCycle());
     }

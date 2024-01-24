@@ -119,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b11d9a24300de54a952c814de8a51f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotGunBlast: {fileID: 0}
   price: 0
   weaponShotType: 0
   range: 60
@@ -136,6 +135,8 @@ MonoBehaviour:
   lineEffect: {fileID: 288801087959572932, guid: ae19d3caa2897e34a990fbd0a5420c38,
     type: 3}
   lineEffectDuration: 0.1
+  enableMuzzleEffect: 0
+  muzzleEffect: {fileID: 0}
   projectilePrefab: {fileID: 0}
   projectileSpeed: 0
 --- !u!1 &3363281283804648816

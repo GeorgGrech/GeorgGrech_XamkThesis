@@ -8,7 +8,6 @@ using UnityEngine.Windows.Speech;
 public class Weapon : MonoBehaviour
 {
     private AudioManager audioManager;
-    public ParticleSystem shotGunBlast;
     //Public properties
     public int price; // price for shop
 
@@ -24,6 +23,7 @@ public class Weapon : MonoBehaviour
     public float damage; //This is per single "projectile", so shotguns would deal this damage * shotsPerRound
 
     [Header("Ammo")]
+    public bool infiniteAmmo;
     public float shotsPerRound; //Multiple shots per round. For use with shotguns.
     public float magSize;
     public float currentAmmo;
@@ -47,6 +47,10 @@ public class Weapon : MonoBehaviour
     public GameObject lineEffect;
     public float lineEffectDuration = .05f;
 
+    [Space(10)]
+    public bool enableMuzzleEffect;
+    public ParticleSystem muzzleEffect;
+
     [Header("Projectile related vars")]
     public GameObject projectilePrefab;
     public float projectileSpeed;
@@ -57,12 +61,19 @@ public class Weapon : MonoBehaviour
 
     WeaponSwitch weaponSwitch;
 
+    [Space(10)]
+    public bool aiWeapon;
+
     private void Awake()
     {
-        ammoDisplay = transform.root.Find("Canvas").Find("Ammo").GetComponentsInChildren<Image>();
+        if(!aiWeapon)
+        {
+            ammoDisplay = transform.root.Find("Canvas").Find("Ammo").GetComponentsInChildren<Image>();
 
-        //ammoUI = transform.root.Find("Canvas").Find("AmmoCount").GetComponent<TextMeshProUGUI>();
-        reloadText = transform.root.Find("Canvas").Find("ReloadText").gameObject;
+            //ammoUI = transform.root.Find("Canvas").Find("AmmoCount").GetComponent<TextMeshProUGUI>();
+            reloadText = transform.root.Find("Canvas").Find("ReloadText").gameObject;
+
+        }
     }
 
     // Start is called before the first frame update
@@ -109,6 +120,14 @@ public class Weapon : MonoBehaviour
             Reload();
     }
 
+    public void AIFire()
+    {
+        if (fireTimer >= actualROF)
+        {
+            Fire();
+        }
+    }
+
     void Fire() //Contains functionality common to both fire types, before choosing between Hitscan and Projectile
     {
         fireTimer = 0f;
@@ -119,7 +138,8 @@ public class Weapon : MonoBehaviour
             return;
         }
 
-        currentAmmo--;
+        if(!infiniteAmmo)
+            currentAmmo--;
 
         for (int i = 0; i < shotsPerRound; i++)
         {
@@ -136,9 +156,15 @@ public class Weapon : MonoBehaviour
 
     void HitscanFire()
     {
-        shotGunBlast.Play();
-        audioManager.playSound(0);
-        Invoke("PlayShellSound", 0.5f);
+        if(enableMuzzleEffect)
+            muzzleEffect.Play();
+
+        if (!aiWeapon)
+        {
+            audioManager.playSound(0);
+            Invoke("PlayShellSound", 0.5f);
+        }
+        else audioManager.playSound(8);
         
         float accuracyVary = (100 - accuracy) / 1000;
         Vector3 direction = shootSpot.forward;
@@ -189,7 +215,8 @@ public class Weapon : MonoBehaviour
         GameObject lrObject = Instantiate(lineEffect);
         LineRenderer lr = lrObject.GetComponent<LineRenderer>();
 
-        weaponSwitch.trailEffects.Add(lrObject);
+        if(!aiWeapon)
+            weaponSwitch.trailEffects.Add(lrObject);
 
         lr.SetPosition(0, shootSpot.position);
         lr.SetPosition(1, direction * range);
@@ -213,24 +240,26 @@ public class Weapon : MonoBehaviour
     //So far I'm just using this to display the debug reload messages, but will be used to update UI later on
     private void UpdateUI()
     {
-
-        if (gameObject.activeSelf) //Don't override if weapon switched
+        if (!aiWeapon)
         {
-            //Update UI
-
-            //ammoUI.SetText(currentAmmo.ToString() + " / " + magSize.ToString());
-
-            foreach(Image image in ammoDisplay)
+            if (gameObject.activeSelf) //Don't override if weapon switched
             {
-                image.sprite = emptyRound;
-            }
+                //Update UI
 
-            for (int i = 0; i < currentAmmo; i++)
-            {
-                ammoDisplay[i].sprite = fullRound;
-            }
+                //ammoUI.SetText(currentAmmo.ToString() + " / " + magSize.ToString());
 
-            Debug.Log(name + " reloaded.");
+                foreach (Image image in ammoDisplay)
+                {
+                    image.sprite = emptyRound;
+                }
+
+                for (int i = 0; i < currentAmmo; i++)
+                {
+                    ammoDisplay[i].sprite = fullRound;
+                }
+
+                Debug.Log(name + " reloaded.");
+            }
         }
         
     }

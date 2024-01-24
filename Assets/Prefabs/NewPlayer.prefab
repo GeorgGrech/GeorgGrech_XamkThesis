@@ -919,7 +919,7 @@ GameObject:
   - component: {fileID: 304255333974866165}
   - component: {fileID: 295765951848192074}
   - component: {fileID: -7684828336226811377}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: NewPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -8453,9 +8453,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8876693546407878977, guid: b2780844c10deea4baadc823fab915de,
         type: 3}
+      propertyPath: muzzleEffect
+      value: 
+      objectReference: {fileID: 2710622370363441239}
+    - target: {fileID: 8876693546407878977, guid: b2780844c10deea4baadc823fab915de,
+        type: 3}
       propertyPath: shotGunBlast
       value: 
       objectReference: {fileID: 2710622370363441239}
+    - target: {fileID: 8876693546407878977, guid: b2780844c10deea4baadc823fab915de,
+        type: 3}
+      propertyPath: enableMuzzleEffect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8876693546407878977, guid: b2780844c10deea4baadc823fab915de,
         type: 3}
       propertyPath: ammoDisplay.Array.size
