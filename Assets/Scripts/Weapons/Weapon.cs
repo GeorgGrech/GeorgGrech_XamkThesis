@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
@@ -8,6 +9,7 @@ using UnityEngine.Windows.Speech;
 public class Weapon : MonoBehaviour
 {
     private AudioManager audioManager;
+    public AudioClip oneShotAudio; //Special case for enemies
     //Public properties
     public int price; // price for shop
 
@@ -164,7 +166,7 @@ public class Weapon : MonoBehaviour
             audioManager.playSound(0);
             Invoke("PlayShellSound", 0.5f);
         }
-        else audioManager.playSound(8);
+        else PlayOneShotAudio();
         
         float accuracyVary = (100 - accuracy) / 1000;
         Vector3 direction = shootSpot.forward;
@@ -272,5 +274,21 @@ public class Weapon : MonoBehaviour
     private void HideReloadMessage()
     {
         reloadText.SetActive(false);
+    }
+
+    private void PlayOneShotAudio()
+    {
+        AudioSource audio = gameObject.AddComponent<AudioSource>();
+        audio.clip = oneShotAudio;
+        audio.playOnAwake = false;
+        audio.volume = 0.3f;
+        audio.Play();
+        StartCoroutine(RemoveAudioSource(audio));
+    }
+
+    private IEnumerator RemoveAudioSource(AudioSource audio)
+    {
+        yield return new WaitForSeconds(3);
+        Destroy(audio);
     }
 }

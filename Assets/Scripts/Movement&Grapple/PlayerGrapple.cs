@@ -44,6 +44,8 @@ public class PlayerGrapple : MonoBehaviour
     private Rigidbody rb;
 
     public LineRenderer lr;
+
+    public GameObject spawnedGrappleModel; //this shouldn't be here, but idk how else to fix this bug.
     // Start is called before the first frame update
     void Start()
     {
@@ -56,21 +58,33 @@ public class PlayerGrapple : MonoBehaviour
     {
         if (Input.GetKeyDown(grappleKey) && !grappling) StartGrapple();
 
-        if (Input.GetKeyUp(grappleKey) && grappling) grappleObject.CancelGrapple();
+        if(grappleObject)
+        {
+            if (Input.GetKeyUp(grappleKey) && grappling) grappleObject.CancelGrapple();
+        }
+        else //Emulate CancelGrapple
+        {
+            lr.enabled = false;
+            grappling = false;
+            Destroy(spawnedGrappleModel);
+        }
 
         if (grappling) //Auto cancel options
         {
-            lr.SetPosition(0, throwPoint.position);
-            lr.SetPosition(1, grappleObject.transform.position);
-
-            grappleObject.spawnedGrappleModel.transform.position = grappleObject.transform.position; //Ideally this would be done in GrappleObject. Too bad I don't care.
-            if ((cancelWhenObstructed
-                && Physics.Linecast(throwPoint.position, grappleObject.transform.position, grappleableLayer)) // Cancel when obstructed
-                    
-                || (cancelWhenClose
-                && Vector3.Distance(grapplePoint,transform.position) <= autoCancelDistance)) //Cancel when in proximity of grapple
+            if (grappleObject)
             {
-                grappleObject.CancelGrapple(); //Break grapple
+                lr.SetPosition(0, throwPoint.position);
+                lr.SetPosition(1, grappleObject.transform.position);
+
+                grappleObject.spawnedGrappleModel.transform.position = grappleObject.transform.position; //Ideally this would be done in GrappleObject. Too bad I don't care.
+                if ((cancelWhenObstructed
+                    && Physics.Linecast(throwPoint.position, grappleObject.transform.position, grappleableLayer)) // Cancel when obstructed
+                    
+                    || (cancelWhenClose
+                    && Vector3.Distance(grapplePoint,transform.position) <= autoCancelDistance)) //Cancel when in proximity of grapple
+                {
+                    grappleObject.CancelGrapple(); //Break grapple
+                }
             }
 
         }

@@ -156,7 +156,6 @@ GameObject:
   - component: {fileID: 3095138883490901628}
   - component: {fileID: 932942999979161426}
   - component: {fileID: 2750944978986090965}
-  - component: {fileID: 190460716133456738}
   - component: {fileID: 7828378582267075184}
   m_Layer: 6
   m_Name: ConeBoid2
@@ -230,27 +229,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &190460716133456738
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2979876320224249429}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 2.878998, y: 2.1282566, z: 2.0000007}
-  m_Center: {x: -0.000000029802322, y: 0.44521463, z: 0.000000029802337}
 --- !u!114 &7828378582267075184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,7 +632,7 @@ Transform:
   m_GameObject: {fileID: 5341490708671964381}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.291, z: 0.238}
+  m_LocalPosition: {x: 0, y: 0.291, z: 0.434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -672,6 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b11d9a24300de54a952c814de8a51f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oneShotAudio: {fileID: 8300000, guid: b2b7a5d84999fa64e939c38864eddbd6, type: 3}
   price: 0
   weaponShotType: 0
   range: 40
@@ -682,17 +661,18 @@ MonoBehaviour:
   currentAmmo: 0
   fullRound: {fileID: 0}
   emptyRound: {fileID: 0}
-  rateOfFire: 10
+  rateOfFire: 8
   reloadTime: 3
-  accuracy: 100
+  accuracy: 80
   shootSpot: {fileID: 917684027791334734}
   lineEffect: {fileID: 288801087959572932, guid: ae19d3caa2897e34a990fbd0a5420c38,
     type: 3}
   lineEffectDuration: 0.05
   enableMuzzleEffect: 0
   muzzleEffect: {fileID: 0}
-  projectilePrefab: {fileID: 0}
-  projectileSpeed: 0
+  projectilePrefab: {fileID: 4988716953918809523, guid: d61dbcf1145ea76408ca9441c8e5d9a8,
+    type: 3}
+  projectileSpeed: 2000
   aiWeapon: 1
 --- !u!1 &5838580023717919575
 GameObject:
@@ -1068,7 +1048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gun: {fileID: 2257430441587112209}
-  angle: 10
+  angle: 20
   distance: 30
 --- !u!1 &7405887941014875574
 GameObject:

@@ -78,6 +78,7 @@ public class GrappleObject : MonoBehaviour
 
         grappleCoroutine = StartCoroutine(Lifetime());
         spawnedGrappleModel = Instantiate(grappleModelPrefab, transform.position, transform.rotation);
+        playerGrapple.spawnedGrappleModel = spawnedGrappleModel;
     }
 
     public void CancelGrapple()
