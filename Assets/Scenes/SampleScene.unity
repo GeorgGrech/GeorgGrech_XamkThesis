@@ -696,10 +696,10 @@ MonoBehaviour:
   spawnDelay: 2
   initialWaitMin: 0
   initialWaitMax: 0
-  endWaveWaitMin: 0
-  endWaveWaitMax: 0
-  initialFlyingEnemyAmount: 4
-  townTimer: 0
+  endWaveWaitMin: 5
+  endWaveWaitMax: 10
+  initialFlyingEnemyAmount: 3
+  enemyIncrease: 1
   leftInWave: 0
   boidsInScene: []
 --- !u!4 &582973282 stripped

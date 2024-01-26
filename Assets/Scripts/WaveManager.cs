@@ -25,10 +25,11 @@ public class WaveManager : MonoBehaviour
     [Space(10)]
 
     [SerializeField] private int initialFlyingEnemyAmount; //Only initial amounts. Rest will be generated procedurally 
+    [SerializeField] private int enemyIncrease; //Only initial amounts. Rest will be generated procedurally 
     //[SerializeField] private int initialGroundEnemyAmount; //Only initial amounts. Rest will be generated procedurally 
     //[SerializeField] private int initialWavesBeforeTown;
 
-    [SerializeField] private int townTimer;
+    //[SerializeField] private int townTimer;
 
     private BoidManager boidManager;
 
@@ -97,6 +98,7 @@ public class WaveManager : MonoBehaviour
             Debug.Log("Next wave starting in " + wait + " seconds");
             yield return new WaitForSeconds(wait);
 
+            flyingInWave += enemyIncrease;
         }
     }
 

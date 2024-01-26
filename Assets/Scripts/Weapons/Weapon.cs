@@ -47,7 +47,6 @@ public class Weapon : MonoBehaviour
 
     [Header("Hitscan related vars")]
     public GameObject lineEffect;
-    public float lineEffectDuration = .05f;
 
     [Space(10)]
     public bool enableMuzzleEffect;
@@ -187,7 +186,7 @@ public class Weapon : MonoBehaviour
 
             
         }
-        StartCoroutine(LineEffect(effectTarget));
+        LineEffect(effectTarget);
     }
 
     private void PlayShellSound()
@@ -212,7 +211,7 @@ public class Weapon : MonoBehaviour
         projectile.GetComponent<Rigidbody>().AddRelativeForce(0, 0, projectileSpeed);
     }
 
-    public IEnumerator LineEffect(Vector3 direction)
+    public void LineEffect(Vector3 direction)
     {
         GameObject lrObject = Instantiate(lineEffect);
         LineRenderer lr = lrObject.GetComponent<LineRenderer>();
@@ -222,9 +221,6 @@ public class Weapon : MonoBehaviour
 
         lr.SetPosition(0, shootSpot.position);
         lr.SetPosition(1, direction * range);
-
-        yield return new WaitForSeconds(lineEffectDuration);
-        Destroy(lrObject);
     }
 
     private void Reload() //This method reloads in one go. Perhaps later for weapons like shotguns, they'll reload one by one?
