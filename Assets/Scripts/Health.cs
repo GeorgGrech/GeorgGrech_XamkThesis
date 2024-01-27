@@ -65,8 +65,8 @@ public class Health : MonoBehaviour
 
         if(CompareTag("Player"))
         {
-            SceneManager.LoadScene(2);
-
+            //SceneManager.LoadScene(2);
+            FindObjectOfType<WaveManager>().GameOver();
         }
         //Destroy(gameObject);
         //StartCoroutine(DestroyObject(this.gameObject));

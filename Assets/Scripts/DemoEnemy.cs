@@ -24,7 +24,7 @@ public class DemoEnemy : MonoBehaviour
     }
     public void OnDeath()
     {
-        waveManager.leftInWave--;
+        waveManager.OnEnemyKilled();
 
         if(CompareTag("boid"))
             waveManager.RemoveBoidFromList(GetComponent<Boid>());

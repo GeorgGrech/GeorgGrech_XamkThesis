@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
@@ -38,10 +40,22 @@ public class WaveManager : MonoBehaviour
     public int leftInWave; //To be decremented from enemies
     public List<Boid> boidsInScene;
 
+    [Space(10)]
+    int waveNo;
+    [SerializeField] TextMeshProUGUI waveNoText;
+    [SerializeField] TextMeshProUGUI leftInWaveText;
+    [SerializeField] TextMeshProUGUI nextWaveMessage;
+    [Space(10)]
+    int enemiesKilled;
+    [SerializeField] GameObject[] objectsToShow;
+    [SerializeField] TextMeshProUGUI wavesSurvivedText;
+    [SerializeField] TextMeshProUGUI enemiesKilledText;
+
     //private List<GameObject> enemies; //Spawned enemies
 
     private void Awake()
     {
+        Time.timeScale = 1f; //Reset timescale in case coming from game over
         _instance = this;
     }
 
@@ -68,12 +82,14 @@ public class WaveManager : MonoBehaviour
 
         int flyingInWave = initialFlyingEnemyAmount;
 
+        waveNo = 1;
+
         //int leftInWave = initialFlyingEnemyAmount+initialGroundEnemyAmount;
         while (true)
         {
             Debug.Log("flyingInWave; " + flyingInWave);
             leftInWave = flyingInWave /* groundInWave*/;
-
+            UpdateUI();
             //This system spawns ALL flying enemies, then ALL ground enemies. Possibly alternate?
             for (int j = 0; j < flyingInWave; j++)
             {
@@ -96,9 +112,11 @@ public class WaveManager : MonoBehaviour
 
             wait = Random.Range(endWaveWaitMin, endWaveWaitMax);
             Debug.Log("Next wave starting in " + wait + " seconds");
+            StartCoroutine(ShowNextWaveMessage(wait));
             yield return new WaitForSeconds(wait);
 
             flyingInWave += enemyIncrease;
+            waveNo++;
         }
     }
 
@@ -116,5 +134,61 @@ public class WaveManager : MonoBehaviour
     {
         boidsInScene.Remove(b);
         boidManager.UpdateBoidList(boidsInScene);
+    }
+
+    public void OnEnemyKilled()
+    {
+        leftInWave--;
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        waveNoText.SetText(waveNo.ToString());
+        leftInWaveText.SetText(leftInWave.ToString());
+    }
+
+    private IEnumerator ShowNextWaveMessage(int time)
+    {
+        yield return new WaitForSeconds(1); //Grace time
+        nextWaveMessage.SetText("Next Wave starting in "+time.ToString()+" seconds...");
+        nextWaveMessage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(4);
+        nextWaveMessage.gameObject.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(ShowGameOverPanel());
+    }
+
+    private IEnumerator ShowGameOverPanel()
+    {
+        Time.timeScale = 0;
+        FindObjectOfType<AudioListener>().enabled = false; //Disable audio
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        int survivedWaves = waveNo - 1;
+        if (survivedWaves == 1)
+            wavesSurvivedText.SetText(survivedWaves.ToString() + "\nWAVE");
+        else
+            wavesSurvivedText.SetText(survivedWaves.ToString() + "\nWAVES");
+
+        if(enemiesKilled == 1)
+            enemiesKilledText.SetText(enemiesKilled.ToString() + "\nENEMY");
+        else
+            enemiesKilledText.SetText(enemiesKilled.ToString() + "\nENEMIES");
+
+        foreach (GameObject uiObject in objectsToShow)
+        {
+            uiObject.SetActive(true);
+            yield return new WaitForSecondsRealtime(2);
+        }
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Load this very scene again
     }
 }

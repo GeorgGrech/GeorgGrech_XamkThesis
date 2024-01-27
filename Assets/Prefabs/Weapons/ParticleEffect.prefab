@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6993766984660546641}
   - component: {fileID: 1019399495292010481}
-  - component: {fileID: -7222858497331810737}
+  - component: {fileID: 4464568051068339652}
   m_Layer: 0
   m_Name: ParticleEffect
   m_TagString: Untagged
@@ -146,7 +146,7 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &-7222858497331810737
+--- !u!114 &4464568051068339652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,4 +158,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af71e305d7874643a3559b0b9ae050b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineEffectDuration: 0.05
+  lineEffectDuration: 0.1

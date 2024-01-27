@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineEffect : MonoBehaviour
+public class LineEffectLifetime : MonoBehaviour
 {
     [SerializeField] private float lineEffectDuration;
     // Start is called before the first frame update
