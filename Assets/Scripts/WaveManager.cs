@@ -51,6 +51,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI wavesSurvivedText;
     [SerializeField] TextMeshProUGUI enemiesKilledText;
 
+    private Transform lastSpawnPoint;
     //private List<GameObject> enemies; //Spawned enemies
 
     private void Awake()
@@ -78,6 +79,7 @@ public class WaveManager : MonoBehaviour
         //Initial wait
         int wait = Random.Range(initialWaitMin, initialWaitMax);
         Debug.Log("First wave starting in " + wait + " seconds");
+        StartCoroutine(ShowNextWaveMessage(wait));
         yield return new WaitForSeconds(wait);
 
         int flyingInWave = initialFlyingEnemyAmount;
@@ -122,9 +124,21 @@ public class WaveManager : MonoBehaviour
 
     GameObject SpawnEnemyAtPoint(GameObject enemyPrefab, Transform[] spawns)
     {
-        int selectedSpawn = Random.Range(0, spawns.Length); //Select random spawn
-        GameObject enemy = Instantiate(enemyPrefab, spawns[selectedSpawn].position, Quaternion.identity); //Spawn enemy.
+        Transform selectedSpawn;
 
+        if (spawns.Length > 1)
+        {
+            do
+            {
+                selectedSpawn = spawns[Random.Range(0, spawns.Length)]; //Select random spawn
+
+            } while (selectedSpawn == lastSpawnPoint);
+        }
+        else selectedSpawn = spawns[0]; //If just one spawn point, don't bother checking duplicate point
+
+        GameObject enemy = Instantiate(enemyPrefab, selectedSpawn.position, Quaternion.identity); //Spawn enemy.
+
+        lastSpawnPoint = selectedSpawn;
         enemy.GetComponent<DemoEnemy>().waveManager = this; //Make sure enemy can access this script
 
         return enemy;
