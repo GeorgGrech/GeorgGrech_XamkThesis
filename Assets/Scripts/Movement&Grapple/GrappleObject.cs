@@ -45,7 +45,7 @@ public class GrappleObject : MonoBehaviour
             if(LayerMask.LayerToName(collision.gameObject.layer) == grappleableLayer) //If collision is grappleable environment
             {
                 audioManager.playSound(5);
-                Debug.Log("Connected to Grappleable surface");
+                //Debug.Log("Connected to Grappleable surface: "+collision.gameObject.name);
 
                 hasConnected = true;
 
