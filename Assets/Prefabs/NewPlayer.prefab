@@ -1058,9 +1058,13 @@ MonoBehaviour:
   grappling: 0
   throwPoint: {fileID: 2585409459551190664}
   maxGrappleDistance: 75
-  pullForce: 35
-  maxPullSpeed: 35
-  grappleSpeed: 8000
+  maxPullSpeed: 50
+  minPullForce: 25
+  maxPullForce: 45
+  defaultPullForce: 35
+  minGrappleSpeed: 4000
+  maxGrappleSpeed: 9000
+  defaultGrappleSpeed: 6500
   grapplePoint: {x: 0, y: 0, z: 0}
   grappleableLayer:
     serializedVersion: 2

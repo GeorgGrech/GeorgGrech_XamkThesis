@@ -15,15 +15,26 @@ public class PlayerGrapple : MonoBehaviour
 
     [SerializeField] private Transform throwPoint;
     [SerializeField] private float maxGrappleDistance;
-    [SerializeField] private float pullForce;
     [SerializeField] private float maxPullSpeed;
 
+    [Space(10)]
+    [Header("DDA-Related Pull Force settings")]
+    [SerializeField] private float minPullForce;
+    [SerializeField] private float maxPullForce;
+    [SerializeField] private float defaultPullForce;
+    [Space(10)]
+
     [Header("Instantiated Grapple Properties")]
-    [SerializeField] private float grappleSpeed;
+    [Space(10)]
+    [Header("DDA-Related Grapple Speed settings")]
+    [SerializeField] private float minGrappleSpeed;
+    [SerializeField] private float maxGrappleSpeed;
+    [SerializeField] private float defaultGrappleSpeed;
+    [Space(10)]
     public Vector3 grapplePoint;
     public LayerMask grappleableLayer;
     public string grappleableLayerName; //Using LayerMask with the grappleObject coughed up errors. So string it is. Cry about it.
-
+    
     private GrappleObject grappleObject;
 
     [Header("Input")]
@@ -46,11 +57,15 @@ public class PlayerGrapple : MonoBehaviour
     public LineRenderer lr;
 
     public GameObject spawnedGrappleModel; //this shouldn't be here, but idk how else to fix this bug.
+
+    private DDAManager ddaManager;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         lr = GetComponent<LineRenderer>();
+
+        ddaManager = DDAManager._instance;
     }
 
     // Update is called once per frame
@@ -117,7 +132,7 @@ public class PlayerGrapple : MonoBehaviour
     {
         grappleObject = GameObject.Instantiate(grapplePrefab,throwPoint.position,Quaternion.identity).GetComponent<GrappleObject>();
 
-        grappleObject.grappleSpeed = grappleSpeed;
+        grappleObject.grappleSpeed = GetGrappleSpeed();
         grappleObject.grapplePoint = grapplePoint;
         grappleObject.playerGrapple = this;
 
@@ -138,12 +153,24 @@ public class PlayerGrapple : MonoBehaviour
         while (true)
         {
             Vector3 dir = (grapplePoint - transform.position).normalized;
-            rb.AddForce(dir * pullForce); //Keep adding force
+            rb.AddForce(dir * GetPullForce()); //Keep adding force
 
             if(rb.velocity.magnitude>maxPullSpeed)
                 rb.velocity = Vector3.ClampMagnitude(rb.velocity,maxPullSpeed);
 
             yield return null;
         }
+    }
+
+    public float GetPullForce()
+    {
+        return ddaManager.GetDynamicValue(true, true, minPullForce, maxPullForce, defaultPullForce);
+    }
+
+    public float GetGrappleSpeed()
+    {
+        float grappleSpeed = ddaManager.GetDynamicValue(true, true, minGrappleSpeed, maxGrappleSpeed, defaultGrappleSpeed);
+        Debug.Log("GrappleSpeed: " + grappleSpeed);
+        return grappleSpeed;
     }
 }
