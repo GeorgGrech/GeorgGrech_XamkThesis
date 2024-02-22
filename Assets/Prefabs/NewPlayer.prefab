@@ -1211,7 +1211,9 @@ MonoBehaviour:
   playerGrapple: {fileID: 2635684106963020395}
   dashCooldown: 2
   doubleTapInterval: 0.2
-  dashForce: 50
+  minDashForce: 20
+  maxDashForce: 40
+  defaultDashForce: 60
   dashTime: 0.1
   playerRB: {fileID: 7714403387093543533}
   playerRotation: {fileID: 7539640989758597534}

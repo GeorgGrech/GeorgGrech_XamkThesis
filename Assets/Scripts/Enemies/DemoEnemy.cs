@@ -17,10 +17,19 @@ public class DemoEnemy : MonoBehaviour
 
     private bool isDead = false;
 
+    [Space(10)]
+    [Header("DDA-Related Health settings")]
+    [SerializeField] private float minHealth;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float defaultHealth;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Health health = GetComponent<Health>();
+        int healthVal = GetHealth();
+        health.health = healthVal;
+        health.maxHealth = healthVal; //This one probably doesnt do anything
     }
     public void OnDeath()
     {
@@ -73,5 +82,8 @@ public class DemoEnemy : MonoBehaviour
         }
     }
 
-
+    public int GetHealth()
+    {
+        return (int)DDAManager._instance.GetDynamicValue(false, false, minHealth, maxHealth, defaultHealth);
+    }
 }

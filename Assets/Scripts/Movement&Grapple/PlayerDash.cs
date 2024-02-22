@@ -14,7 +14,16 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] private float doubleTapInterval;
     private float doubleTapTimer;
 
-    [SerializeField] private float dashForce;
+    private float dashForce;
+
+
+    private DDAManager ddaManager;
+    [Space(10)]
+    [Header("DDA-Related DashForce settings")]
+    [SerializeField] private float minDashForce;
+    [SerializeField] private float maxDashForce;
+    [SerializeField] private float defaultDashForce;
+
     [SerializeField] private float dashTime;
 
     [SerializeField] Rigidbody playerRB;
@@ -36,6 +45,7 @@ public class PlayerDash : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ddaManager = DDAManager._instance;
         dashCooldownTimer = dashCooldown; //Make dash instantly available
     }
 
@@ -85,8 +95,8 @@ public class PlayerDash : MonoBehaviour
         dashing = true;
         dashDirection = playerRotation.localRotation * forceDirection;
         playerRB.useGravity = false; //Disable gravity to keep constant direction
-
-
+        dashForce = GetDashForce();
+        
         yield return new WaitForSeconds(dashTime);
         dashing = false;
         playerRB.useGravity = true;
@@ -158,5 +168,10 @@ public class PlayerDash : MonoBehaviour
             //Possibly check layer here?
             dashing = false;
         }
+    }
+
+    float GetDashForce()
+    {
+        return ddaManager.GetDynamicValue(true, true, minDashForce, maxDashForce, defaultDashForce);
     }
 }

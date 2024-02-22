@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineEffectLifetime : MonoBehaviour
+public class Lifetime : MonoBehaviour
 {
-    [SerializeField] private float lineEffectDuration;
+    [SerializeField] private float duration;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Lifetime());
+        StartCoroutine(LifetimeCoroutine());
     }
 
     // Update is called once per frame
@@ -17,9 +17,9 @@ public class LineEffectLifetime : MonoBehaviour
         
     }
 
-    private IEnumerator Lifetime()
+    private IEnumerator LifetimeCoroutine()
     {
-        yield return new WaitForSeconds(lineEffectDuration);
+        yield return new WaitForSeconds(duration);
         Destroy(gameObject);
     }
 }
