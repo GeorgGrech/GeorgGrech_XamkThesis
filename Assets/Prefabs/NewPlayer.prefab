@@ -888,6 +888,7 @@ GameObject:
   - component: {fileID: 304255333974866165}
   - component: {fileID: 295765951848192074}
   - component: {fileID: -7684828336226811377}
+  - component: {fileID: 923863263987843881}
   m_Layer: 0
   m_Name: NewPlayer
   m_TagString: Player
@@ -1219,6 +1220,18 @@ MonoBehaviour:
   playerRotation: {fileID: 7539640989758597534}
   dashSlider: {fileID: 5735480868873801443}
   lastPressed: 0
+--- !u!114 &923863263987843881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3499018715176485879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a263d827795b0e4bb299023c24917f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3607941501784933249
 GameObject:
   m_ObjectHideFlags: 0

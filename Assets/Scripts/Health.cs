@@ -44,7 +44,8 @@ public class Health : MonoBehaviour
                 Death();
             }   
             Debug.Log(name+" health: "+health);
-        
+
+            SendMessageUpwards("TrackDamage", -amount, SendMessageOptions.DontRequireReceiver); //Track player damage for DDA system. Will only trigger on player with playerDDATracker script
         }
 
          if(healthSlider != null)

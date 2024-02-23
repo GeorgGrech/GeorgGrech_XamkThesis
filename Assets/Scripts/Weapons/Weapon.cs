@@ -142,6 +142,8 @@ public class Weapon : MonoBehaviour
         if(!infiniteAmmo)
             currentAmmo--;
 
+        SendMessageUpwards("TrackShotFired", null, SendMessageOptions.DontRequireReceiver);
+
         for (int i = 0; i < shotsPerRound; i++)
         {
 

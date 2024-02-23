@@ -4329,6 +4329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80aee3bde1141243ae242f9ae5a3a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDDA: 1
   physicsBasedDDA: 1
   difficultyModifier: 0
 --- !u!4 &796011970

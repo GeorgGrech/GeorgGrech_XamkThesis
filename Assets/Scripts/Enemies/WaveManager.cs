@@ -52,6 +52,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI enemiesKilledText;
 
     private Transform lastSpawnPoint;
+
+    private DDAManager ddaManager;
     //private List<GameObject> enemies; //Spawned enemies
 
     private void Awake()
@@ -63,6 +65,7 @@ public class WaveManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ddaManager = DDAManager._instance;
         boidManager = FindObjectOfType<BoidManager>();
         //boidManager.waveManager = this;
         StartCoroutine(WaveCycle());
@@ -92,6 +95,7 @@ public class WaveManager : MonoBehaviour
             Debug.Log("flyingInWave; " + flyingInWave);
             leftInWave = flyingInWave /* groundInWave*/;
             UpdateUI();
+            ddaManager.StartRoundTrack();
             //This system spawns ALL flying enemies, then ALL ground enemies. Possibly alternate?
             for (int j = 0; j < flyingInWave; j++)
             {
@@ -111,6 +115,7 @@ public class WaveManager : MonoBehaviour
             {
                 yield return null;
             }
+            ddaManager.EndRoundTrack();
 
             wait = Random.Range(endWaveWaitMin, endWaveWaitMax);
             Debug.Log("Next wave starting in " + wait + " seconds");
