@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Windows.Speech;
@@ -180,15 +181,15 @@ public class Weapon : MonoBehaviour
 
         Vector3 effectTarget = shootSpot.forward+direction*range;
 
-        if (Physics.Raycast(ray, out hit, range) && !hit.collider.isTrigger)
+        if (Physics.Raycast(ray, out hit, range))
         {
             //Get GameObject hit
             GameObject gb = hit.collider.gameObject;
             gb.SendMessageUpwards("ChangeHealth", -damage, SendMessageOptions.DontRequireReceiver);
-
-            
         }
         LineEffect(effectTarget);
+        //EditorApplication.isPaused = true; //Testing purposes. Leave commented.
+
     }
 
     private void PlayShellSound()
