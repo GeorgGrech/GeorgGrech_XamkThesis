@@ -4330,8 +4330,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDDA: 1
+  firstRound: 1
   physicsBasedDDA: 1
   difficultyModifier: 0
+  useRoundTime: 1
+  useDamageTaken: 1
+  useShotsFired: 0
+  maxRoundTime: 60
+  maxDamageTaken: 150
+  maxShotsFired: 0
 --- !u!4 &796011970
 Transform:
   m_ObjectHideFlags: 0

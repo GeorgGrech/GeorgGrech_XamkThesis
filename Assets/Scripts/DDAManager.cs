@@ -6,6 +6,7 @@ public class DDAManager : MonoBehaviour
 {
     public static DDAManager _instance;
     public bool enableDDA; // If false, always use default values
+    public bool firstRound; // If true, use default values
     public bool physicsBasedDDA; // If true, modify player physics mechanics, else modify enemies
 
     [Range(0f, 1f)]
@@ -16,6 +17,19 @@ public class DDAManager : MonoBehaviour
     private int damageTaken;
     private int shotsFired;
     private Coroutine timeTracker;
+    [Space(10)]
+
+    [Header("Variables to use in calculations")]
+    [SerializeField] private bool useRoundTime;
+    [SerializeField] private bool useDamageTaken;
+    [SerializeField] private bool useShotsFired;
+    [Space(10)]
+
+    //Max player struggle comparison values - If player variables equals or greater to these, player struggle is at max - lowest difficulty next round.
+    [Header("Max player struggle comparison values")]
+    [SerializeField] private int maxRoundTime;
+    [SerializeField] private int maxDamageTaken;
+    [SerializeField] private int maxShotsFired;
 
     private void Awake() //implement singleton pattern to not permit multiple instances
     {
@@ -33,14 +47,44 @@ public class DDAManager : MonoBehaviour
         //ResetDDA();
     }
 
+    //I used this garbage system for a project back in 2022 knowing damn well it was awful. I can't believe I'm using it again for a thesis project.
     public void GenerateDifficultyModifier() //Generate difficulty modifier
     {
+        List<float> ratioVariables = new List<float>(); 
 
+        if(useRoundTime)
+        {
+            float timeRatio = (float) roundTime / maxRoundTime;
+            ratioVariables.Add(Mathf.Clamp01(timeRatio)); //clamp value to 1 incase it exceeds max
+        }
+
+        if(useDamageTaken)
+        {
+            float damageRatio = (float)damageTaken/ maxDamageTaken;
+            ratioVariables.Add(Mathf.Clamp01(damageRatio)); //clamp value to 1 incase it exceeds max
+        }
+
+        if (useShotsFired)
+        {
+            float shotsRatio = (float)shotsFired/ maxShotsFired;
+            ratioVariables.Add(Mathf.Clamp01(shotsRatio)); //clamp value to 1 incase it exceeds max
+        }
+
+        float cumulRatios = 0;
+
+        foreach (float ratio in ratioVariables)
+        {
+            cumulRatios += ratio;
+        }
+
+        difficultyModifier = 1 - cumulRatios/ratioVariables.Count; 
+
+        Debug.Log("New difficulty modifier is: " + difficultyModifier);
     }
 
     public float GetDynamicValue(bool physicsBasedVar, bool invertVal, float min, float max, float defaultValue)
     {
-        if (!enableDDA) return defaultValue;
+        if (!enableDDA || firstRound) return defaultValue;
 
         if (physicsBasedDDA == physicsBasedVar) //If this value actually needs to be modified with current DDA system
         {
@@ -65,6 +109,8 @@ public class DDAManager : MonoBehaviour
 
     public void EndRoundTrack()
     {
+        firstRound = false; //No longer first round, stop using default values
+
         Debug.Log("Time taken: " + roundTime+ " - "+
             "damage taken: " + damageTaken+ " - " +
             "shots fired: " + shotsFired);
