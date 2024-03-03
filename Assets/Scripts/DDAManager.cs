@@ -20,9 +20,9 @@ public class DDAManager : MonoBehaviour
     [Space(10)]
 
     [Header("Variables to use in calculations")]
-    [SerializeField] private bool useRoundTime;
-    [SerializeField] private bool useDamageTaken;
-    [SerializeField] private bool useShotsFired;
+    public bool useRoundTime;
+    public bool useDamageTaken;
+    public bool useShotsFired;
     [Space(10)]
 
     //Max player struggle comparison values - If player variables equals or greater to these, player struggle is at max - lowest difficulty next round.
@@ -31,11 +31,16 @@ public class DDAManager : MonoBehaviour
     [SerializeField] private int maxDamageTaken;
     [SerializeField] private int maxShotsFired;
 
+    public string resultsPath;
+
+    DataLogger dataLogger;
+
     private void Awake() //implement singleton pattern to not permit multiple instances
     {
         if (_instance == null)
         {
             _instance = this;
+            dataLogger = FindObjectOfType<DataLogger>();
         }
         else if (_instance != null)
         {
@@ -109,6 +114,7 @@ public class DDAManager : MonoBehaviour
 
     public void EndRoundTrack()
     {
+        dataLogger.LogRoundEnd(WaveManager._instance.waveNo, difficultyModifier, roundTime, damageTaken, shotsFired);
         firstRound = false; //No longer first round, stop using default values
 
         Debug.Log("Time taken: " + roundTime+ " - "+

@@ -41,7 +41,7 @@ public class WaveManager : MonoBehaviour
     public List<Boid> boidsInScene;
 
     [Space(10)]
-    int waveNo;
+    public int waveNo;
     [SerializeField] TextMeshProUGUI waveNoText;
     [SerializeField] TextMeshProUGUI leftInWaveText;
     [SerializeField] TextMeshProUGUI nextWaveMessage;
@@ -56,10 +56,12 @@ public class WaveManager : MonoBehaviour
     private DDAManager ddaManager;
     //private List<GameObject> enemies; //Spawned enemies
 
+    DataLogger dataLogger;
     private void Awake()
     {
         Time.timeScale = 1f; //Reset timescale in case coming from game over
         _instance = this;
+        dataLogger = FindObjectOfType<DataLogger>();
     }
 
     // Start is called before the first frame update
@@ -179,6 +181,7 @@ public class WaveManager : MonoBehaviour
 
     public void GameOver()
     {
+        dataLogger.WriteLog();
         StartCoroutine(ShowGameOverPanel());
     }
 

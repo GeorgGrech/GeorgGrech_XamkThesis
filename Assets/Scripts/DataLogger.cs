@@ -1,0 +1,88 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using UnityEditor;
+using UnityEngine;
+
+public class DataLogger : MonoBehaviour
+{
+    public string gameGUID;
+
+    StringBuilder gameSummary;
+
+    DDAManager ddaManager;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        ddaManager = DDAManager._instance;
+
+        gameGUID = Guid.NewGuid().ToString();
+        gameSummary = new StringBuilder("Round No.,Difficulty Modifier,");
+
+        if (ddaManager.useRoundTime)
+            gameSummary.Append(",Time Taken");
+
+        if(ddaManager.useDamageTaken)
+            gameSummary.Append(",Damage Taken");
+
+        if(ddaManager.useShotsFired)
+            gameSummary.Append(",Shots Fired");
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void LogRoundEnd(int roundNum,float difficultyModifier,int timeTaken, int dmgTaken, int shotsFired)
+    {
+        gameSummary.Append("\n")
+            .Append(roundNum + ",");
+
+
+        if (ddaManager.firstRound)
+            gameSummary.Append("Default,");
+        else
+            gameSummary.Append(difficultyModifier + ",");
+
+        if (ddaManager.useRoundTime)
+            gameSummary.Append(timeTaken+",");
+
+        if(ddaManager.useDamageTaken)
+            gameSummary.Append(dmgTaken+",");
+
+
+        if(ddaManager.useShotsFired)
+            gameSummary.Append(shotsFired+",");
+    }
+
+    public void WriteLog()
+    {
+        Debug.Log("Saving logs with id: " + gameGUID);
+
+        string path;
+
+#if UNITY_EDITOR
+        path = Application.streamingAssetsPath + "/" + "Data_" + gameGUID; //Rework for build
+#else
+        path = ddaManager.resultsPath+"/"+"Data_"+gameGUID;
+#endif
+
+        if (!Directory.Exists(path))
+            Directory.CreateDirectory(path);
+
+        using (var writer = new StreamWriter(path + "/gameSummary.csv", false)) //Save game summary
+        {
+            writer.Write(gameSummary);
+        }
+
+#if UNITY_EDITOR
+        AssetDatabase.Refresh();
+#endif
+    }
+}
