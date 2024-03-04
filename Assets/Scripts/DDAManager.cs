@@ -31,25 +31,17 @@ public class DDAManager : MonoBehaviour
     [SerializeField] private int maxDamageTaken;
     [SerializeField] private int maxShotsFired;
 
-    public string resultsPath;
-
     DataLogger dataLogger;
+    GameSettings gameSettings;
 
-    private void Awake() //implement singleton pattern to not permit multiple instances
+    private void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-            dataLogger = FindObjectOfType<DataLogger>();
-        }
-        else if (_instance != null)
-        {
-            Destroy(this.gameObject);
-        }
-        DontDestroyOnLoad(this.gameObject);
+        _instance = this;
+        dataLogger = FindObjectOfType<DataLogger>();
 
-        //On Level Load, reset DDA
-        //ResetDDA();
+        gameSettings = GameSettings._instance;
+        enableDDA = gameSettings.enableDDA;
+        physicsBasedDDA = gameSettings.physicsBasedDDA;
     }
 
     //I used this garbage system for a project back in 2022 knowing damn well it was awful. I can't believe I'm using it again for a thesis project.
@@ -112,9 +104,9 @@ public class DDAManager : MonoBehaviour
         timeTracker = StartCoroutine(RoundTimeTracker());
     }
 
-    public void EndRoundTrack()
+    public void EndRoundTrack(int waveNo, int enemiesKilled)
     {
-        dataLogger.LogRoundEnd(WaveManager._instance.waveNo, difficultyModifier, roundTime, damageTaken, shotsFired);
+        dataLogger.LogRoundEnd(waveNo, difficultyModifier, enemiesKilled, roundTime, damageTaken, shotsFired);
         firstRound = false; //No longer first round, stop using default values
 
         Debug.Log("Time taken: " + roundTime+ " - "+

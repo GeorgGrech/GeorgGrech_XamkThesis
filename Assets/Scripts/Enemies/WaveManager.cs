@@ -46,7 +46,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI leftInWaveText;
     [SerializeField] TextMeshProUGUI nextWaveMessage;
     [Space(10)]
-    int enemiesKilled;
+    int totalEnemiesKilled; //Total Enemies Killed
+    int enemiesKilledInRound;
     [SerializeField] GameObject[] objectsToShow;
     [SerializeField] TextMeshProUGUI wavesSurvivedText;
     [SerializeField] TextMeshProUGUI enemiesKilledText;
@@ -97,6 +98,7 @@ public class WaveManager : MonoBehaviour
             Debug.Log("flyingInWave; " + flyingInWave);
             leftInWave = flyingInWave /* groundInWave*/;
             UpdateUI();
+            enemiesKilledInRound = 0;
             ddaManager.StartRoundTrack();
             //This system spawns ALL flying enemies, then ALL ground enemies. Possibly alternate?
             for (int j = 0; j < flyingInWave; j++)
@@ -117,7 +119,7 @@ public class WaveManager : MonoBehaviour
             {
                 yield return null;
             }
-            ddaManager.EndRoundTrack();
+            ddaManager.EndRoundTrack(waveNo, enemiesKilledInRound);
 
             wait = Random.Range(endWaveWaitMin, endWaveWaitMax);
             Debug.Log("Next wave starting in " + wait + " seconds");
@@ -160,7 +162,8 @@ public class WaveManager : MonoBehaviour
     public void OnEnemyKilled()
     {
         leftInWave--;
-        enemiesKilled++;
+        totalEnemiesKilled++;
+        enemiesKilledInRound++;
         UpdateUI();
     }
 
@@ -181,6 +184,7 @@ public class WaveManager : MonoBehaviour
 
     public void GameOver()
     {
+        ddaManager.EndRoundTrack(waveNo, enemiesKilledInRound); //Logging purposes
         dataLogger.WriteLog();
         StartCoroutine(ShowGameOverPanel());
     }
@@ -198,10 +202,10 @@ public class WaveManager : MonoBehaviour
         else
             wavesSurvivedText.SetText(survivedWaves.ToString() + "\nWAVES");
 
-        if(enemiesKilled == 1)
-            enemiesKilledText.SetText(enemiesKilled.ToString() + "\nENEMY");
+        if(totalEnemiesKilled == 1)
+            enemiesKilledText.SetText(totalEnemiesKilled.ToString() + "\nENEMY");
         else
-            enemiesKilledText.SetText(enemiesKilled.ToString() + "\nENEMIES");
+            enemiesKilledText.SetText(totalEnemiesKilled.ToString() + "\nENEMIES");
 
         foreach (GameObject uiObject in objectsToShow)
         {

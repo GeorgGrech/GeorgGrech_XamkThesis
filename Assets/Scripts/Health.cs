@@ -34,6 +34,7 @@ public class Health : MonoBehaviour
         if (!dead)
         {
             health += amount;
+            SendMessageUpwards("TrackDamage", -amount, SendMessageOptions.DontRequireReceiver); //Track player damage for DDA system. Will only trigger on player with playerDDATracker script
             if (health > maxHealth)
             {
                 health = maxHealth;
@@ -45,7 +46,6 @@ public class Health : MonoBehaviour
             }   
             Debug.Log(name+" health: "+health);
 
-            SendMessageUpwards("TrackDamage", -amount, SendMessageOptions.DontRequireReceiver); //Track player damage for DDA system. Will only trigger on player with playerDDATracker script
         }
 
          if(healthSlider != null)

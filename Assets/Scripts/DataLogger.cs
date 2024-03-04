@@ -20,7 +20,7 @@ public class DataLogger : MonoBehaviour
         ddaManager = DDAManager._instance;
 
         gameGUID = Guid.NewGuid().ToString();
-        gameSummary = new StringBuilder("Round No.,Difficulty Modifier,");
+        gameSummary = new StringBuilder("Round No.,Difficulty Modifier,Enemies Killed");
 
         if (ddaManager.useRoundTime)
             gameSummary.Append(",Time Taken");
@@ -39,7 +39,8 @@ public class DataLogger : MonoBehaviour
         
     }
 
-    public void LogRoundEnd(int roundNum,float difficultyModifier,int timeTaken, int dmgTaken, int shotsFired)
+    public void LogRoundEnd(int roundNum,float difficultyModifier,int enemiesKilled,
+        int timeTaken, int dmgTaken, int shotsFired)
     {
         gameSummary.Append("\n")
             .Append(roundNum + ",");
@@ -49,6 +50,8 @@ public class DataLogger : MonoBehaviour
             gameSummary.Append("Default,");
         else
             gameSummary.Append(difficultyModifier + ",");
+
+        gameSummary.Append(enemiesKilled + ",");
 
         if (ddaManager.useRoundTime)
             gameSummary.Append(timeTaken+",");
@@ -63,6 +66,15 @@ public class DataLogger : MonoBehaviour
 
     public void WriteLog()
     {
+        gameSummary.Append("\n\n");
+        gameSummary.Append("DDA Mode,");
+
+        if (ddaManager.physicsBasedDDA)
+            gameSummary.Append("Physics");
+        else
+            gameSummary.Append("Traditional");
+
+
         Debug.Log("Saving logs with id: " + gameGUID);
 
         string path;
@@ -70,7 +82,7 @@ public class DataLogger : MonoBehaviour
 #if UNITY_EDITOR
         path = Application.streamingAssetsPath + "/" + "Data_" + gameGUID; //Rework for build
 #else
-        path = ddaManager.resultsPath+"/"+"Data_"+gameGUID;
+        path = GameSettings._instance.resultsPath+"/"+"Data_"+gameGUID;
 #endif
 
         if (!Directory.Exists(path))
