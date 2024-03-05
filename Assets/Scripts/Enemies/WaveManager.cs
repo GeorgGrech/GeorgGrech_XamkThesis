@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
@@ -212,10 +211,5 @@ public class WaveManager : MonoBehaviour
             uiObject.SetActive(true);
             yield return new WaitForSecondsRealtime(2);
         }
-    }
-
-    public void Retry()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //Load this very scene again
     }
 }
