@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,9 +14,7 @@ public class GameSettings : MonoBehaviour
 
     public static GameSettings _instance;
 
-    [SerializeField] private Toggle enableDDAToggle;
-    [SerializeField] private Toggle physicsDDAToggle;
-    [SerializeField] private TMP_InputField resultsPathField;
+    public MainMenuSettingsUI mmsui;
 
     private void Awake() //implement singleton pattern to not permit multiple instances
     {
@@ -31,26 +30,5 @@ public class GameSettings : MonoBehaviour
 
         //On Level Load, reset DDA
         //ResetDDA();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void EnableDDA()
-    {
-        enableDDA = enableDDAToggle.isOn;
-    }
-
-    public void PhysicsDDA()
-    {
-        physicsBasedDDA = physicsDDAToggle.isOn;
-    }
-
-    public void SetResultsPath()
-    {
-        resultsPath = resultsPathField.text;
     }
 }

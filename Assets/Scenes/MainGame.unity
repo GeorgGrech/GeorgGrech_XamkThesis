@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b7f08d7e73cf8f042be31cc610bb29ae,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -4519,10 +4520,13 @@ MonoBehaviour:
   difficultyModifier: 0
   useRoundTime: 1
   useDamageTaken: 1
-  useShotsFired: 0
-  maxRoundTime: 60
+  useShotsFired: 1
+  minRoundTime: 15
+  minDamageTaken: 0
+  minShotsFired: 6
+  maxRoundTime: 90
   maxDamageTaken: 150
-  maxShotsFired: 0
+  maxShotsFired: 20
 --- !u!4 &796011970
 Transform:
   m_ObjectHideFlags: 0

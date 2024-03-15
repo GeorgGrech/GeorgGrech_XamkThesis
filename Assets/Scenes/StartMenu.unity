@@ -202,6 +202,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155028517}
   m_CullTransparentMesh: 1
+--- !u!1 &244054760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 244054762}
+  - component: {fileID: 244054761}
+  m_Layer: 0
+  m_Name: MainMenuSettingsUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &244054761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244054760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0812ede00afea254b8582480a3f439ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDDAToggle: {fileID: 1139119004}
+  physicsDDAToggle: {fileID: 2132989697}
+  resultsPathField: {fileID: 261670048}
+--- !u!4 &244054762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244054760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &261670046
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,8 +350,8 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1195117822}
-        m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
+      - m_Target: {fileID: 244054761}
+        m_TargetAssemblyTypeName: MainMenuSettingsUI, Assembly-CSharp
         m_MethodName: SetResultsPath
         m_Mode: 1
         m_Arguments:
@@ -1132,8 +1179,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1195117822}
-        m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
+      - m_Target: {fileID: 244054761}
+        m_TargetAssemblyTypeName: MainMenuSettingsUI, Assembly-CSharp
         m_MethodName: EnableDDA
         m_Mode: 1
         m_Arguments:
@@ -1177,9 +1224,7 @@ MonoBehaviour:
   resultsPath: 
   enableDDA: 1
   physicsBasedDDA: 1
-  enableDDAToggle: {fileID: 1139119004}
-  physicsDDAToggle: {fileID: 2132989697}
-  resultsPathField: {fileID: 261670048}
+  mmsui: {fileID: 0}
 --- !u!4 &1195117823
 Transform:
   m_ObjectHideFlags: 0
@@ -1501,9 +1546,9 @@ RectTransform:
   - {fileID: 1202999335}
   - {fileID: 2133425570}
   - {fileID: 1531308343}
-  - {fileID: 261670047}
   - {fileID: 1139119003}
   - {fileID: 2132989696}
+  - {fileID: 261670047}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2353,8 +2398,8 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1195117822}
-        m_TargetAssemblyTypeName: GameSettings, Assembly-CSharp
+      - m_Target: {fileID: 244054761}
+        m_TargetAssemblyTypeName: MainMenuSettingsUI, Assembly-CSharp
         m_MethodName: PhysicsDDA
         m_Mode: 1
         m_Arguments:
@@ -2509,3 +2554,4 @@ SceneRoots:
   - {fileID: 1352094855}
   - {fileID: 1935945297}
   - {fileID: 400110333}
+  - {fileID: 244054762}

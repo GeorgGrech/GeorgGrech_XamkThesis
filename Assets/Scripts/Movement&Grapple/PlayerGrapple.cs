@@ -169,8 +169,6 @@ public class PlayerGrapple : MonoBehaviour
 
     public float GetGrappleSpeed()
     {
-        float grappleSpeed = ddaManager.GetDynamicValue(true, true, minGrappleSpeed, maxGrappleSpeed, defaultGrappleSpeed);
-        Debug.Log("GrappleSpeed: " + grappleSpeed);
-        return grappleSpeed;
+        return ddaManager.GetDynamicValue(true, true, minGrappleSpeed, maxGrappleSpeed, defaultGrappleSpeed);
     }
 }

@@ -1063,9 +1063,9 @@ MonoBehaviour:
   minPullForce: 25
   maxPullForce: 45
   defaultPullForce: 35
-  minGrappleSpeed: 4000
-  maxGrappleSpeed: 9000
-  defaultGrappleSpeed: 6500
+  minGrappleSpeed: 2000
+  maxGrappleSpeed: 6500
+  defaultGrappleSpeed: 4000
   grapplePoint: {x: 0, y: 0, z: 0}
   grappleableLayer:
     serializedVersion: 2
@@ -7971,42 +7971,42 @@ PrefabInstance:
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.44
+      value: -0.59
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.908
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.679
+      value: 0.91
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.72777283
+      value: 0.4658661
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.55912644
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.52689373
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.68581825
+      value: -0.4390096
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -100.398
       objectReference: {fileID: 0}
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
@@ -8016,7 +8016,7 @@ PrefabInstance:
     - target: {fileID: 2320160848308822492, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -86.6
+      value: -86.600006
       objectReference: {fileID: 0}
     - target: {fileID: 4495835689653295407, guid: 4fecb8e65ca0eba4fb8a342aef7909c6,
         type: 3}

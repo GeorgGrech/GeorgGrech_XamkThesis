@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DDAManager : MonoBehaviour
@@ -25,7 +26,13 @@ public class DDAManager : MonoBehaviour
     public bool useShotsFired;
     [Space(10)]
 
-    //Max player struggle comparison values - If player variables equals or greater to these, player struggle is at max - lowest difficulty next round.
+    //Min player struggle comparison values - If player variables equals or less than these, player struggle is at min - highest difficulty next round.
+    [Header("Min player struggle comparison values")]
+    [SerializeField] private int minRoundTime;
+    [SerializeField] private int minDamageTaken;
+    [SerializeField] private int minShotsFired;
+
+    //Max player struggle comparison values - If player variables equals or greater than these, player struggle is at max - lowest difficulty next round.
     [Header("Max player struggle comparison values")]
     [SerializeField] private int maxRoundTime;
     [SerializeField] private int maxDamageTaken;
@@ -51,20 +58,23 @@ public class DDAManager : MonoBehaviour
 
         if(useRoundTime)
         {
-            float timeRatio = (float) roundTime / maxRoundTime;
-            ratioVariables.Add(Mathf.Clamp01(timeRatio)); //clamp value to 1 incase it exceeds max
+            float timeRatio = GetRatioVariable((float)roundTime, (float)minRoundTime, (float)maxRoundTime); //Generate value between 0 and 1
+            ratioVariables.Add(timeRatio);
+            Debug.Log("Time taken: " + roundTime + ". RatioVariable is: " + timeRatio);
         }
 
         if(useDamageTaken)
         {
-            float damageRatio = (float)damageTaken/ maxDamageTaken;
-            ratioVariables.Add(Mathf.Clamp01(damageRatio)); //clamp value to 1 incase it exceeds max
+            float damageRatio = GetRatioVariable((float)damageTaken, (float)minDamageTaken, (float)maxDamageTaken);
+            ratioVariables.Add(damageRatio);
+            Debug.Log("Damage taken: " + damageTaken+ ". RatioVariable is: " + damageRatio);
         }
 
         if (useShotsFired)
         {
-            float shotsRatio = (float)shotsFired/ maxShotsFired;
-            ratioVariables.Add(Mathf.Clamp01(shotsRatio)); //clamp value to 1 incase it exceeds max
+            float shotsRatio = GetRatioVariable((float)shotsFired, (float)minShotsFired, (float)maxShotsFired);
+            ratioVariables.Add(shotsRatio);
+            Debug.Log("Shots fired: " + shotsFired + ". RatioVariable is: " + shotsRatio);
         }
 
         float cumulRatios = 0;
@@ -77,6 +87,11 @@ public class DDAManager : MonoBehaviour
         difficultyModifier = 1 - cumulRatios/ratioVariables.Count; 
 
         Debug.Log("New difficulty modifier is: " + difficultyModifier);
+    }
+
+    private float GetRatioVariable(float value, float min, float max)
+    {
+        return Mathf.Clamp01((value - min) / (max - min)); //Clamp between 0 and 1
     }
 
     public float GetDynamicValue(bool physicsBasedVar, bool invertVal, float min, float max, float defaultValue)
