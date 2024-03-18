@@ -5,7 +5,7 @@ using UnityEngine;
 public class SafetyBorder : MonoBehaviour
 {
     [SerializeField] private Vector2 moveTo; //Vector2 since just x and z should be influenced
-    [SerializeField] private float moveForce;//Vector2 since just x and z should be influenced
+    [SerializeField] private float moveForce;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +20,7 @@ public class SafetyBorder : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player")) //Do for both players and enemies
+        if (other.CompareTag("Player"))
         {
             Rigidbody rb = other.GetComponent<Rigidbody>();
 

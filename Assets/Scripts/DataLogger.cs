@@ -20,7 +20,7 @@ public class DataLogger : MonoBehaviour
         ddaManager = DDAManager._instance;
 
         gameGUID = Guid.NewGuid().ToString();
-        gameSummary = new StringBuilder("Round No.,Difficulty Modifier,Enemies Killed");
+        gameSummary = new StringBuilder("Wave No.,Difficulty Modifier,Enemies Killed");
 
         if (ddaManager.useRoundTime)
             gameSummary.Append(",Time Taken");
