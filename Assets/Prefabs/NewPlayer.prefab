@@ -1060,9 +1060,9 @@ MonoBehaviour:
   throwPoint: {fileID: 2585409459551190664}
   maxGrappleDistance: 75
   maxPullSpeed: 50
-  minPullForce: 25
-  maxPullForce: 45
-  defaultPullForce: 35
+  minPullForce: 15
+  maxPullForce: 35
+  defaultPullForce: 25
   minGrappleSpeed: 2000
   maxGrappleSpeed: 6500
   defaultGrappleSpeed: 4000
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 300
+  maxHealth: 400
   dead: 0
   healthSlider: {fileID: 5246299366427657678}
 --- !u!114 &-7684828336226811377
@@ -1210,11 +1210,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGrapple: {fileID: 2635684106963020395}
-  dashCooldown: 2
+  dashCooldown: 1.5
   doubleTapInterval: 0.2
   minDashForce: 20
-  maxDashForce: 40
-  defaultDashForce: 60
+  maxDashForce: 60
+  defaultDashForce: 40
   dashTime: 0.1
   playerRB: {fileID: 7714403387093543533}
   playerRotation: {fileID: 7539640989758597534}

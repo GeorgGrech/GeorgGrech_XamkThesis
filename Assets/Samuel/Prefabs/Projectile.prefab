@@ -234,6 +234,6 @@ MonoBehaviour:
   GlobalVolume: {fileID: 0}
   explosionVfx: {fileID: 1366778526591135940, guid: 67aeff07d99f559409298245081d4e07,
     type: 3}
-  minDamage: 10
-  maxDamage: 50
-  defaultDamage: 30
+  minDamage: 5
+  maxDamage: 40
+  defaultDamage: 20

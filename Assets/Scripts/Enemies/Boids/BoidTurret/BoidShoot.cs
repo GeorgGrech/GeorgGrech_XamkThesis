@@ -7,19 +7,20 @@ public class BoidShoot : MonoBehaviour
     public Rigidbody projectile;
     public float initialSpeed = 20.0f;
     public float reloadTime = 0.5f;
-    public int ammoCount = 20;
+    //public int ammoCount = 20;
     private float lastShot = -10.0f;
 
     
 
     private Rigidbody rb;
     private Transform playerTransform;
-
+    private Health boidHealth;
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerTransform = player.transform;
         rb = player.GetComponent<Rigidbody>();
+        boidHealth = GetComponentInParent<Health>();
     }
 
     void OnTriggerEnter(Collider col)
@@ -33,7 +34,7 @@ public class BoidShoot : MonoBehaviour
     private void Fire()
     {
         // Did the time exceed the reload time?
-        if (Time.time > reloadTime + lastShot && ammoCount > 0)
+        if (Time.time > reloadTime + lastShot /*&& ammoCount > 0*/ && !boidHealth.dead)
         {
             // Create a new projectile, use the same position and rotation as the Launcher.
             Rigidbody instantiatedProjectile = Instantiate(projectile, transform.position, transform.rotation);
@@ -53,7 +54,7 @@ public class BoidShoot : MonoBehaviour
             Physics.IgnoreCollision(instantiatedProjectile.GetComponent<Collider>(), transform.root.GetComponent<Collider>());
 
             lastShot = Time.time;
-            ammoCount--;
+            //ammoCount--;
         }
     }
 }

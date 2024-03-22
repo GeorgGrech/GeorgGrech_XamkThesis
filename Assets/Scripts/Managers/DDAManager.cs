@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -49,6 +50,9 @@ public class DDAManager : MonoBehaviour
         gameSettings = GameSettings._instance;
         enableDDA = gameSettings.enableDDA;
         physicsBasedDDA = gameSettings.physicsBasedDDA;
+
+        UpdateModeSelectText();
+        
     }
 
     //I used this garbage system for a project back in 2022 knowing damn well it was awful. I can't believe I'm using it again for a thesis project.
@@ -152,5 +156,18 @@ public class DDAManager : MonoBehaviour
     {
         shotsFired++;
         Debug.Log("Shots fired this round: " + shotsFired);
+    }
+
+    void UpdateModeSelectText()
+    {
+        TextMeshProUGUI mode = GameObject.Find("ModeSelectText").GetComponent<TextMeshProUGUI>();
+        if (!gameSettings.enableDDA)
+            mode.text = "/";
+        else
+        {
+            if (gameSettings.physicsBasedDDA)
+                mode.text = "A";
+            else mode.text = "B";
+        }
     }
 }

@@ -564,7 +564,6 @@ MonoBehaviour:
     type: 3}
   initialSpeed: 20
   reloadTime: 0.5
-  ammoCount: 20
 --- !u!65 &3388875037847393791
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1114,7 +1113,7 @@ MonoBehaviour:
     type: 3}
   minHealth: 30
   maxHealth: 100
-  defaultHealth: 70
+  defaultHealth: 65
 --- !u!1 &7405887941014875574
 GameObject:
   m_ObjectHideFlags: 0

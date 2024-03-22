@@ -6,17 +6,6 @@ public class SafetyBorder : MonoBehaviour
 {
     [SerializeField] private Vector2 moveTo; //Vector2 since just x and z should be influenced
     [SerializeField] private float moveForce;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerStay(Collider other)
     {
