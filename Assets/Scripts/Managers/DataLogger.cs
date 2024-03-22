@@ -79,9 +79,16 @@ public class DataLogger : MonoBehaviour
 
         string path;
 
+        if(GameSettings._instance.resultsPath.Length == 0)
+        {
+            
+        }
+
 #if UNITY_EDITOR
         path = Application.streamingAssetsPath + "/" + "Data_" + gameGUID; //Rework for build
 #else
+
+        if(p)
         path = GameSettings._instance.resultsPath+"/"+"Data_"+gameGUID;
 #endif
 

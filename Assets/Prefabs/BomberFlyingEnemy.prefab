@@ -1111,9 +1111,9 @@ MonoBehaviour:
   waveManager: {fileID: 0}
   explosionVfx: {fileID: 1366778526591135940, guid: 67aeff07d99f559409298245081d4e07,
     type: 3}
-  minHealth: 30
-  maxHealth: 100
-  defaultHealth: 65
+  minHealth: 40
+  maxHealth: 120
+  defaultHealth: 80
 --- !u!1 &7405887941014875574
 GameObject:
   m_ObjectHideFlags: 0
