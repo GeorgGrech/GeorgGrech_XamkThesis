@@ -1057,12 +1057,13 @@ MonoBehaviour:
     type: 3}
   grappleViewModel: {fileID: 3462191088333948818}
   grappling: 0
+  pullingPlayer: 0
   throwPoint: {fileID: 2585409459551190664}
   maxGrappleDistance: 75
-  maxPullSpeed: 50
-  minPullForce: 15
-  maxPullForce: 35
-  defaultPullForce: 25
+  maxPullSpeed: 40
+  minPullForce: 40
+  maxPullForce: 100
+  defaultPullForce: 70
   minGrappleSpeed: 2000
   maxGrappleSpeed: 6500
   defaultGrappleSpeed: 4000

@@ -12,6 +12,7 @@ public class PlayerGrapple : MonoBehaviour
     [SerializeField] private GameObject grappleViewModel;
 
     public bool grappling = false;
+    public bool pullingPlayer = false;
 
     [SerializeField] private Transform throwPoint;
     [SerializeField] private float maxGrappleDistance;
@@ -81,6 +82,7 @@ public class PlayerGrapple : MonoBehaviour
         {
             lr.enabled = false;
             grappling = false;
+            pullingPlayer = false;
             Destroy(spawnedGrappleModel);
         }
 
@@ -102,6 +104,19 @@ public class PlayerGrapple : MonoBehaviour
                 }
             }
 
+        }
+    }
+
+    private void FixedUpdate() //Moved coroutine to fixedUpdate for more reliable physics
+    {
+        if (pullingPlayer)
+        {
+            Vector3 dir = (grapplePoint - transform.position).normalized;
+            rb.AddForce(dir * GetPullForce()); //Keep adding force
+
+            Debug.Log("Magnitude: " + rb.velocity.magnitude);
+            if (rb.velocity.magnitude > maxPullSpeed)
+                rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxPullSpeed);
         }
     }
 
@@ -152,11 +167,7 @@ public class PlayerGrapple : MonoBehaviour
     {
         while (true)
         {
-            Vector3 dir = (grapplePoint - transform.position).normalized;
-            rb.AddForce(dir * GetPullForce()); //Keep adding force
-
-            if(rb.velocity.magnitude>maxPullSpeed)
-                rb.velocity = Vector3.ClampMagnitude(rb.velocity,maxPullSpeed);
+            
 
             yield return null;
         }
@@ -164,11 +175,15 @@ public class PlayerGrapple : MonoBehaviour
 
     public float GetPullForce()
     {
-        return ddaManager.GetDynamicValue(true, true, minPullForce, maxPullForce, defaultPullForce);
+        float val = ddaManager.GetDynamicValue(true, true, minPullForce, maxPullForce, defaultPullForce);
+        Debug.Log("Pull force: " + val);
+        return val;
     }
 
     public float GetGrappleSpeed()
     {
-        return ddaManager.GetDynamicValue(true, true, minGrappleSpeed, maxGrappleSpeed, defaultGrappleSpeed);
+        float val = ddaManager.GetDynamicValue(true, true, minGrappleSpeed, maxGrappleSpeed, defaultGrappleSpeed);
+        Debug.Log("Grapple speed: " + val);
+        return val;
     }
 }
