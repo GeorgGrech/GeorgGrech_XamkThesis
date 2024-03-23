@@ -79,17 +79,18 @@ public class DataLogger : MonoBehaviour
 
         string path;
 
-        if(GameSettings._instance.resultsPath.Length == 0)
-        {
-            
-        }
-
+        Directory.GetParent(Application.streamingAssetsPath);
 #if UNITY_EDITOR
         path = Application.streamingAssetsPath + "/" + "Data_" + gameGUID; //Rework for build
 #else
-
-        if(p)
-        path = GameSettings._instance.resultsPath+"/"+"Data_"+gameGUID;
+        if (GameSettings._instance.resultsPath.Length == 0)
+        {
+            path = Directory.GetParent(Application.streamingAssetsPath) + "/Results"+"/"+"Data_"+gameGUID;
+        }
+        else
+        {
+            path = GameSettings._instance.resultsPath+"/"+"Data_"+gameGUID;
+        }
 #endif
 
         if (!Directory.Exists(path))
