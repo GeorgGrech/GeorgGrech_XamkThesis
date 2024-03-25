@@ -5128,7 +5128,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Physics DDA
+  m_Text: P-Based DDA
 --- !u!222 &1472676349
 CanvasRenderer:
   m_ObjectHideFlags: 0
