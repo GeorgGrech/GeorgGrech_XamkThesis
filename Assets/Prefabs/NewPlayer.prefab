@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGrapple: {fileID: 2635684106963020395}
-  dashCooldown: 1.5
+  dashCooldown: 1
   doubleTapInterval: 0.2
   minDashForce: 20
   maxDashForce: 60
